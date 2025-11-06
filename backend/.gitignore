@@ -1,0 +1,78 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+pnpm-lock.yaml
+
+# Environment Variables
+.env
+.env.local
+.env.production
+.env.test
+.env*.local
+
+# Build Output
+dist/
+build/
+out/
+.next/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Prisma
+# Keep schema.prisma but ignore migrations in some cases
+# Uncomment if you don't want to track migrations
+# prisma/migrations/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Cookie files for testing
+cookies.txt
+
+# Test files (optional - uncomment if you don't want to track test files)
+# test-*.js
+# check-*.js
+# *.test.js
+# *.spec.js
+
+# Documentation (optional - keep verification docs but ignore if generated)
+# OAUTH-PASSWORD-SYNC-VERIFICATION.md
+# EMAIL_SETUP_GUIDE.md
