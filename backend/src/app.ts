@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import googleRoutes from './routes/googleRoutes.js';
+import leadRoutes from './routes/leadRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { env } from './config/env.js';
 import { logger } from './utils/logger.js';
@@ -41,6 +42,7 @@ app.get('/health', (_req: Request, res: Response) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', googleRoutes);
+app.use('/api/leads', leadRoutes);
 
 app.use((_req: Request, res: Response) => {
   res.status(404).json({

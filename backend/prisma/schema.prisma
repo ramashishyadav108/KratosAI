@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique
-  password      String?
-  name          String?
-  googleId      String?        @unique
-  isVerified    Boolean        @default(false)
+  id                String         @id @default(uuid())
+  email             String         @unique
+  password          String?
+  name              String?
+  googleId          String?        @unique
+  isVerified        Boolean        @default(false)
   verificationToken String?
-  resetToken    String?
-  resetTokenExpiry DateTime?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  refreshTokens RefreshToken[]
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  leads             Lead[]
+  refreshTokens     RefreshToken[]
 
   @@index([email])
   @@index([googleId])
@@ -29,11 +30,77 @@ model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
   revoked   Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([token])
   @@index([userId])
+}
+
+model Lead {
+  id                String       @id @default(uuid())
+  firstName         String
+  middleName        String?
+  lastName          String?
+  contactPerson     String?
+  companyName       String?
+  email             String?
+  phone             String?
+  source            LeadSource   @default(WEBSITE)
+  sourceDetails     String?
+  leadType          LeadType?
+  leadPriority      LeadPriority @default(MEDIUM)
+  status            LeadStatus   @default(NEW)
+  industry          String?
+  dealValue         Float?
+  notes             String?
+  assignedRM        String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  createdById       String
+  createdBy         User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([source])
+  @@index([createdById])
+  @@index([assignedRM])
+  @@index([leadPriority])
+}
+
+enum LeadStatus {
+  NEW
+  KNOCKOUT_FAILED
+  MEETING_SCHEDULED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+enum LeadSource {
+  WEBSITE
+  REFERRAL
+  LINKEDIN
+  COLD_CALL
+  EMAIL_CAMPAIGN
+  TRADE_SHOW
+  PARTNER
+  OTHER
+}
+
+enum LeadType {
+  INDIVIDUAL
+  BUSINESS
+  CORPORATE
+  GOVERNMENT
+}
+
+enum LeadPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }

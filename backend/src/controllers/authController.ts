@@ -190,9 +190,9 @@ export const logoutOtherDevices = async (
 };
 
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const { token } = req.query;
+  
   try {
-    const { token } = req.query;
-
     if (!token || typeof token !== 'string') {
       logger.warn('Email verification attempt without token');
       throw new AppError('Verification token required', HTTP_STATUS.BAD_REQUEST);

@@ -60,7 +60,7 @@ class AuthService {
 
   // Google OAuth - redirects to backend OAuth URL
   initiateGoogleLogin(): void {
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
     window.location.href = `${apiBaseUrl}/api/auth/google`;
   }
 
