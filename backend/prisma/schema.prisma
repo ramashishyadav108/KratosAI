@@ -145,4 +145,67 @@ enum MeetingStatus {
   NO_SHOW
 }
 
+model CustomerBasicInfo {
+  id                    String                @id @default(uuid())
+  leadId                String                @unique
+  applicantType         ApplicantType
+  name                  String                // Full Name for Individual or Business Name for Business
+  entityType            String?               // Individual, Proprietorship, Partnership, etc.
+  industry              String?
+  country               String?
+
+  // Government Registrations - Individual
+  pan                   String?
+  aadhaar               String?
+
+  // Government Registrations - Business
+  businessPan           String?
+  gstin                 String?
+  cin                   String?               // CIN / LLPIN
+  udyam                 String?
+
+  // Contact Details
+  contactPerson         String?
+  phoneNumber           String?
+  email                 String?
+
+  // Key Person Details (for Business)
+  keyPersonPan          String?
+  keyPersonDob          DateTime?
+
+  // Addresses
+  address               String?               // For Individual
+  registeredAddress     String?               // For Business
+  city                  String?
+  state                 String?
+  pincode               String?
+
+  // Ownership/Directors
+  ownershipDirectors    OwnershipDirector[]
+
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  @@index([leadId])
+}
+
+model OwnershipDirector {
+  id                    String              @id @default(uuid())
+  customerBasicInfoId   String
+  customerBasicInfo     CustomerBasicInfo   @relation(fields: [customerBasicInfoId], references: [id], onDelete: Cascade)
+  name                  String
+  pan                   String
+  dob                   DateTime?
+  designation           String
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([customerBasicInfoId])
+}
+
+enum ApplicantType {
+  INDIVIDUAL
+  BUSINESS
+}
+
 
